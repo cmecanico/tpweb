@@ -117,13 +117,44 @@ public class DataElemento {
 		}
 	}
 	
+	public void update(Elemento el) throws Exception{
+		PreparedStatement stmt=null;
+		ResultSet keyResultSet=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn()
+					.prepareStatement(
+					"update elemento set nombre = ?, idtipo = ? where id = ?",
+					PreparedStatement.RETURN_GENERATED_KEYS
+					);
+			
+			stmt.setString(1, el.getNombre());
+			stmt.setInt(2, el.getTipo().getID());
+			stmt.setInt(3, el.getID());
+			
+			stmt.executeUpdate();
+			keyResultSet=stmt.getGeneratedKeys();
+			if(keyResultSet!=null && keyResultSet.next()){
+				el.setID(keyResultSet.getInt(1));
+			}
+		} catch (SQLException | AppDataException e) {
+			throw e;
+		}
+		try {
+			if(keyResultSet!=null)keyResultSet.close();
+			if(stmt!=null)stmt.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void delete(Elemento el) throws Exception{						
 		PreparedStatement stmt=null;
 		int a;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"delete from elemento where nombre=?");
-			stmt.setString(1, el.getNombre());
+					"delete from elemento where id=?");
+			stmt.setInt(1, el.getID());
 			a = stmt.executeUpdate();
 			
 		} catch (Exception e) {

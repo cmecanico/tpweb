@@ -10,6 +10,7 @@
     <%session.setAttribute("paginaActual", "e_admin");%>
     
     <jsp:include page="views/general/referencias.html"/>
+    <script src="views/elemento/elemento.controller.js"></script>
     
   </head>
   <body>

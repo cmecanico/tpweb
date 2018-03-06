@@ -25,7 +25,6 @@
                     <h3 style="font-style: italic;"> Cantidad de Tipos de Elemento encontrados: <%out.print(cantidad); %></h3>
                     <br>
                     </div>
-
                      
                      <div class="table-responsive"  id="itemsTiposElemento">
                      <table class="table" id="tablaTiposElemento">
@@ -38,13 +37,10 @@
                          <td></td>
                          <td></td>
                          <!--<td><button type="button" class="btn btn-default">Volver a página principal</button></td>-->
-                         
                     </tr>
-
 
                      <!-- VERIFICA SI HAY OBJETOS EN LA LISTA PARA MOSTRALOS-->
                   <% 
-
                     for(TipoElemento x : lista)
                     {   
                         %>
@@ -52,8 +48,24 @@
                          <td><%out.print(x.getID()); %></td>
                          <td><%out.print(x.getNombre()); %></td>
                          <td><%out.print(x.getCantMaxReservasPendientes()); %></td>
-                         <td><button href="" data-toggle="modal" data-target="#modalEdit" class="btn btn-default">Modificar</button></td>
-                         <td><button href="" data-toggle="modal" data-target="#modalBaja" class="btn btn-danger">Eliminar</button>
+                         <td>
+                         	<button href="" data-toggle="modal" data-target="#modalEdit" 
+                         	 onclick="setInputsModificar(
+                         		'<%out.print(x.getID());%>',
+                         		'<%out.print(x.getNombre()); %>',
+                         		'<%out.print(x.getCantMaxReservasPendientes());%>'	 
+                         	 )"
+                         	class="btn btn-default">
+                         		Modificar
+                         	</button>
+                       	 </td>
+                         <td><button href="" data-toggle="modal" data-target="#modalBaja" 
+                         	onclick="setInputsEliminar(
+                         		'<%out.print(x.getID());%>'	 
+                         	 )"
+                         	class="btn btn-danger">
+                         		Eliminar
+                         	</button>
                          </tr>
                  <%}%>
                      </table>
@@ -61,9 +73,6 @@
                      </div>
                      <button href="" data-toggle="modal" data-target="#modalAlta" class="btn btn-info">Agregar</button>                     
                      <br><hr> 
-                    
-                    
-                    
                <%}                
              
        //MENSAJE PARA USUARIOS NO LOGUEADOS
@@ -76,7 +85,6 @@
         </div>
            <%
             }
-       
      %>     
      <br> <br> <br>
 </div>
@@ -91,7 +99,7 @@
         <h4 class="modal-title" id="myModalLabel">Nuevo Tipo de Elemento</h4>
       </div>
       <div class="modal-body">
-        <form role="form" id="te_alta" method="post" action="TeAlta.do" onsubmit="return valideDatos()">
+        <form role="form" id="te_alta" method="post" action="TeAlta.do" onsubmit="return validarAlta()">
 		  <div class="form-group">
 		    <label for="nombre">Nombre:</label>
 		    <input type="text" class="form-control" id="nombre" name="nombre">
@@ -118,25 +126,20 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Baja de Tipo de Elemento</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body">        
         <form role="form" id="te_baja" method="post" action="TeBaja.do">
-		  <div class="form-group">
-		    <label for="id">ID:</label>
-		    <label for="idCampo"></label>
+		  <div class="form-group hidden">
+		    <label for="field_idEliminar">ID:</label>
+		    <input type="number" class="form-control" id="field_idEliminar" name="idEliminar">
 		  </div>
 		  <div class="form-group">
-		    <label for="nombre">Nombre:</label>
-		    <label for="nombreCampo"></label>
-		  </div>
-		  <div class="form-group">
-		    <label for="cantidad">Cant Max Reservas Pendientes:</label>
-		    <label for="cantidadCampo"></label>
+		    <label for="Confirmar">¿Esta seguro que desea eliminar el tipo de elemento?</label>
 		  </div>
 		  <button type="submit" class="btn btn-default">Eliminar</button>
 		</form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
       </div>
     </div>
   </div>
@@ -150,15 +153,19 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Modificar Tipo de Elemento</h4>
       </div>
-      <div class="modal-body">
-        <form role="form" id="te_edit" method="post" action="TeEdit.do">
-		  <div class="form-group">
-		    <label for="nombre">Nombre:</label>
-		    <input type="text" class="form-control" id="nombre" name="nombre">
+      <div class="modal-body">        
+        <form role="form" id="te_edit" method="post" action="TeEdit.do" onsubmit="return validarModificacion()">		  
+		  <div class="form-group hidden">
+		    <label for="field_idModificar">ID:</label>
+		    <input type="number" class="form-control" id="field_idModificar" name="idModificar">
 		  </div>
 		  <div class="form-group">
-		    <label for="cantidad">Cant Max Reservas Pendientes:</label>
-		    <input type="text" class="form-control" id="cantidad" name="cantidad">
+		    <label for="field_nombreModificar">Nombre:</label>
+		    <input type="text" class="form-control" id="field_nombreModificar" name="nombreModificar">
+		  </div>
+		  <div class="form-group">
+		    <label for="field_cantidadModificar">Cant Max Reservas Pendientes:</label>
+		    <input type="number" class="form-control" id="field_cantidadModificar" name="cantidadModificar">
 		  </div>
 		  <button type="submit" class="btn btn-default">Modificar</button>
 		</form>

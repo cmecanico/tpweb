@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
+
 import logica.*;
 import entidades.*;
 
@@ -49,6 +51,7 @@ public class uLoginController extends HttpServlet {
                
                 sesion.setAttribute("username", persona.getUsuario());
                 sesion.setAttribute("nombre", persona.getNombre());
+                sesion.setAttribute("id", persona.getID());
                
                 response.sendRedirect("index.jsp");
             } else {  

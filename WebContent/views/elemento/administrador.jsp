@@ -12,10 +12,10 @@
        
        //VERIFICA SI HAY USUARIO LOGUEADO
        if(session.getAttribute("username")!=null)
-       {                   
-                CtrlABMCElemento ctrlABMCElemento = new CtrlABMCElemento(); 
+       {          
+    	   		CtrlABMCElemento ctrlABMCElemento = new CtrlABMCElemento();
                 
-                    ArrayList<Elemento> lista = ctrlABMCElemento.getall();
+                    ArrayList<Elemento> lista = ctrlABMCElemento.getAll();
                     int i, cantidad = lista.size();
                     TipoElemento te = new TipoElemento();
                     %>
@@ -27,8 +27,8 @@
                     </div>
 
                      
-                     <div class="table-responsive"  id="itemsTiposElemento">
-                     <table class="table" id="tablaTiposElemento">
+                     <div class="table-responsive"  id="itemsElemento">
+                     <table class="table" id="tablaElementos">
                      <!-- CODIGO PARA EL ENCABEZADO-->
                      <br>
                      <tr>
@@ -51,8 +51,24 @@
                          <td><%out.print(x.getID()); %></td>
                          <td><%out.print(x.getNombre()); %></td>
                          <td><%out.print(x.getTipo().getNombre()); %></td>
-                         <td><button href="" data-toggle="modal" data-target="#modalEdit" class="btn btn-default">Modificar</button></td>
-                         <td><button href="" data-toggle="modal" data-target="#modalBaja" class="btn btn-danger">Eliminar</button>
+                         <td>
+                         	<button href="" data-toggle="modal" data-target="#modalEdit" 
+                         	 onclick="setInputsModificar(
+                         		'<%out.print(x.getID()); %>',
+                         		'<%out.print(x.getNombre()); %>',
+                         		'<%out.print(x.getTipo().getID()); %>' 
+                         	 )"
+                         	class="btn btn-default">
+                         		Modificar
+                         	</button>
+                       	 </td>
+                         <td><button href="" data-toggle="modal" data-target="#modalBaja" 
+                         	onclick="setInputsEliminar(
+                         		'<%out.print(x.getID()); %>' 
+                         	 )"
+                         	class="btn btn-danger">
+                         		Eliminar
+                         	</button>
                          </tr>
                  <%}%>
                      </table>
@@ -79,4 +95,106 @@
      %>     
      <br> <br> <br>
 </div>
+</div>
+
+
+<!-- Modal de alta -->
+<div class="modal fade" id="modalAlta" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Nuevo Elemento</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form" id="e_alta" method="post" action="EAlta.do" onsubmit="return validarAlta()">
+		  <div class="form-group">
+		    <label for="nombre">Nombre:</label>
+		    <input type="text" class="form-control" id="nombre" name="nombre">
+		  </div>
+		  <div class="form-group">
+		    <label for="tipo">Tipo de Elemento:</label>
+		    <select name="tipoelemento" id="tipoelemento">
+		    <% CtrlABMCTipoElemento ctrlTipo = new CtrlABMCTipoElemento(); %>
+    		<% for (TipoElemento te : ctrlTipo.getAll()) {%>
+       		<option value="<% out.print(te.getID());%>">
+       			<% out.print(te.getNombre());%>
+       		</option> 
+       		<%};%>
+			</select>
+		  </div>
+		  <button type="submit" class="btn btn-default">Agregar</button>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de baja -->
+<div class="modal fade" id="modalBaja" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Baja de Elemento</h4>
+      </div>
+      <div class="modal-body">        
+        <form role="form" id="e_baja" method="post" action="EBaja.do">		  
+		  <div class="form-group hidden">
+		    <label for="field_idEliminar">ID:</label>
+		    <input type="number" class="form-control" id="field_idEliminar" name="idEliminar">
+		  </div>
+		  <div class="form-group">
+		    <label for="Confirmar">¿Esta seguro que desea eliminar el elemento?</label>
+		  </div>
+		  <button type="submit" class="btn btn-default">Eliminar</button>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de modificar -->
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Modificar Elemento</h4>
+      </div>
+      <div class="modal-body">        
+        <form role="form" id="e_edit" method="post" action="EEdit.do" onsubmit="return validarModificacion()">		  
+		  <div class="form-group hidden">
+		    <label for="field_idModificar">ID:</label>
+		    <input type="number" class="form-control" id="field_idModificar" name="idModificar">
+		  </div>
+		  <div class="form-group">
+		    <label for="field_nombreModificar">Nombre:</label>
+		    <input type="text" class="form-control" id="field_nombreModificar" name="nombreModificar">
+		  </div>
+		  <div class="form-group">
+		    <label for="field_tipoModificar">Tipo de Elemento:</label>
+		    <select name="tipoelemento" id="field_tipoModificar">
+		    <% CtrlABMCTipoElemento ctrlTipoM = new CtrlABMCTipoElemento(); %>
+    		<% for (TipoElemento te : ctrlTipoM.getAll()) {%>
+       		<option value="<% out.print(te.getID());%>">
+       			<% out.print(te.getNombre());%>
+       		</option> 
+       		<%};%>
+			</select>
+		  </div>
+		  <button type="submit" class="btn btn-default">Modificar</button>
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
 </div>

@@ -10,6 +10,7 @@
     <%session.setAttribute("paginaActual", "te_admin");%>
     
     <jsp:include page="views/general/referencias.html"/>
+    <script src="views/tipoElemento/tipoElemento.controller.js"></script>
     
   </head>
   <body>
@@ -18,12 +19,12 @@
         
         <jsp:include page="views/general/navbar.jsp"/>
                 
-         <%try{%>
+         <%try {%>
           <jsp:include page="views/tipoElemento/administrador.jsp"/>
-        <%}catch (Exception e)
+        <%} catch (Exception e)
         {
             session.setAttribute("errorCatch", e.toString());
-            RequestDispatcher rd =null;
+            RequestDispatcher rd = null;
                                                    
             rd=request.getRequestDispatcher("error.jsp");
             rd.forward(request,response);

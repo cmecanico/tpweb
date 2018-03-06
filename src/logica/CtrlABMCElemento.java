@@ -1,4 +1,4 @@
-package logica;
+ package logica;
 
 import java.util.ArrayList;
 
@@ -6,6 +6,7 @@ import com.sun.org.apache.bcel.internal.generic.RET;
 
 import entidades.Elemento;
 import datos.DataElemento;
+import datos.DataPersona;
 
 public class CtrlABMCElemento {
 	
@@ -31,9 +32,8 @@ private ArrayList<Elemento> elementos;
 	}
 	
 	public void update(Elemento el)throws Exception{			
-		DataElemento dataeles = new DataElemento();
-		dataeles.delete(el);
-		dataeles.add(el);
+		DataElemento dataele= new DataElemento();
+		dataele.update(el);
 				
 	}
 	
@@ -47,11 +47,5 @@ private ArrayList<Elemento> elementos;
 		Elemento elEncontrado = dataeles.getByNombre(el);
 		return elEncontrado;
 	}
-	
-	public ArrayList<Elemento> getall() throws Exception{
-		DataElemento dataeles = new DataElemento();
-		return dataeles.getAll();
-	}
-
 
 }

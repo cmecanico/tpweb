@@ -7,14 +7,14 @@ public class Persona extends Categoria implements Serializable{
 	public Persona() {}
 
 	private int iD;
-	private int dni;
+	private String dni;
 	private String nombre;
 	private String apellido;
 	private String usuario;
 	private String contraseña;
 	private boolean habilitado;
 	
-	public Persona(int id, int dni, String nombre, String apellido, String usuario,	String contraseña, boolean habilitado) {
+	public Persona(int id, String dni, String nombre, String apellido, String usuario,	String contraseña, boolean habilitado) {
 		this.iD = id;
 		this.dni = dni;
 		this.nombre = nombre;
@@ -41,11 +41,11 @@ public class Persona extends Categoria implements Serializable{
 		this.contraseña = contraseña;
 	}
 	
-	public int getDni() {
+	public String getDni() {
 		return dni;
 	}
 	
-	public void setDni(int dni) {
+	public void setDni(String dni) {
 		this.dni = dni;
 	}
 	

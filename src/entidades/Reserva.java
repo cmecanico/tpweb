@@ -1,18 +1,30 @@
 package entidades;
 
-import java.io.Serializable;
-
-public class Reserva implements Serializable {
+public class Reserva {
 	
-	public Reserva() {}
 	
 	private int id;
 	private Persona persona;
 	private TipoElemento tipoelemento;
 	private Elemento elemento;
-	private String detalle;
-	private java.sql.Date fecha;
-	private java.sql.Time hora;
+	private String detalle;	
+	private java.util.Date fechaYhora;
+	
+	/*private String fecha;
+	private String hora;
+	
+	public String getFecha() {
+		return fecha;
+	}
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+	public String getHora() {
+		return hora;
+	}
+	public void setHora(String hora) {
+		this.hora = hora;
+	}	
 	
 	public java.sql.Time getHora() {
 		return hora;
@@ -20,6 +32,13 @@ public class Reserva implements Serializable {
 	public void setHora(java.sql.Time hora) {
 		this.hora = hora;
 	}
+	public java.sql.Date getFecha() {
+		return fecha;
+	}
+	public void setFecha(java.sql.Date fecha) {
+		this.fecha = fecha;
+	}
+	*/
 	public int getId() {
 		return id;
 	}
@@ -51,10 +70,11 @@ public class Reserva implements Serializable {
 	public void setDetalle(String detalle) {
 		this.detalle = detalle;
 	}
-	public java.sql.Date getFecha() {
-		return fecha;
+	public java.util.Date getFechaYhora() {
+		return fechaYhora;
 	}
-	public void setFecha(java.sql.Date fecha) {
-		this.fecha = fecha;
+	public void setFechaYhora(java.util.Date fechaYhora) {
+		this.fechaYhora = fechaYhora;
 	}
+	
 }

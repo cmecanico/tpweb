@@ -16,7 +16,7 @@
       <ul class="nav navbar-nav navbar-right">
       	<%if((String)session.getAttribute("nombre") != null){%>
 	      		
-	      		<li class="active"><a href="teAdmin.jsp">Tipos Elemnto <span class="sr-only">(current)</span></a></li>
+	      		<li class="active"><a href="teAdmin.jsp">Tipos de Elemento <span class="sr-only">(current)</span></a></li>
 	      		<li class="active"><a href="eAdmin.jsp">Elementos <span class="sr-only">(current)</span></a></li>
 	      		<li class="active"><a href="pAdmin.jsp">Personas <span class="sr-only">(current)</span></a></li>
 	      		<li class="active"><a href="rAdmin.jsp">Reservas <span class="sr-only">(current)</span></a></li>

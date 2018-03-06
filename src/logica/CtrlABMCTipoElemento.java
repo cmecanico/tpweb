@@ -23,35 +23,21 @@ public class CtrlABMCTipoElemento {
 	}
 	
 	public void delete(TipoElemento te)throws Exception{
-		//Persona pEncontrada = this.buscaPersona(p);
-		//personas.remove(pEncontrada);	
 		DataTipoElemento datatipoelemento = new DataTipoElemento();
 		datatipoelemento.delete(te);
 	}
 	
-	public void update(TipoElemento te)throws Exception{				//mantener id al modificar?
-		//Persona pEncontrada = this.buscaPersona(p);
-		//personas.remove(pEncontrada);
-		//personas.add(p);
+	public void update(TipoElemento te)throws Exception{
 		DataTipoElemento datatipoelemento = new DataTipoElemento();
-		datatipoelemento.delete(te);
-		datatipoelemento.add(te);
-				
+		datatipoelemento.update(te);	
 	}
 	
-	public TipoElemento consulta(TipoElemento te)throws Exception{			//no muestra id
+	public TipoElemento consulta(TipoElemento te)throws Exception{
 		TipoElemento teEncontrado = this.buscaTipoElemento(te);
 		return teEncontrado;
 	}
 	
 	public TipoElemento buscaTipoElemento(TipoElemento te)throws Exception{
-		/*Persona pEncontrada = null;
-		for (Persona pActual : personas) {
-			if (p.getDni() == pActual.getDni()){
-				pEncontrada = pActual;
-				break;
-			}
-		} */
 		DataTipoElemento datatipoelemento = new DataTipoElemento();
 		TipoElemento teEncontrado = datatipoelemento.getByNombre(te);
 		return teEncontrado;

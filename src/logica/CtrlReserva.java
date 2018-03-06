@@ -23,11 +23,9 @@ public class CtrlReserva {
 		datares.delete(res);
 	}
 	
-	public void update(Reserva res)throws Exception{				//mantener id al modificar?
+	public void update(Reserva res)throws Exception{				
 		DataReserva datares = new DataReserva();
-		datares.delete(res);
-		datares.add(res);
-				
+		datares.update(res);				
 	}
 	
 	public Reserva consulta(Reserva res)throws Exception{			
@@ -37,13 +35,14 @@ public class CtrlReserva {
 	
 	public Reserva buscaReserva(Reserva res)throws Exception{
 		DataReserva datares = new DataReserva();
-		Reserva resEncontrada = datares.getByDetalle(res);			//cambiar de atributo para la busqueda
+		Reserva resEncontrada = datares.getById(res);			
 		return resEncontrada;
 	}
 	
 	public ArrayList<Reserva> getall() throws Exception{
 		DataReserva datares = new DataReserva();
-		return datares.getAll();
+		ArrayList<Reserva> res = datares.getAll();
+		return res;
 	}
 
 

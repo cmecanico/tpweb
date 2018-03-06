@@ -51,6 +51,7 @@ public class DataTipoElemento {
 		
 	}
 	
+	
 	public TipoElemento getByNombre(TipoElemento tipoele) throws Exception{		//no me muestra el id
 		TipoElemento te = null;
 		PreparedStatement stmt=null;
@@ -109,13 +110,44 @@ public class DataTipoElemento {
 		}
 	}
 	
+	public void update(TipoElemento te) throws Exception{
+		PreparedStatement stmt=null;
+		ResultSet keyResultSet=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn()
+					.prepareStatement(
+					"update tipoelemento set nombre = ?, cantmaxreservaspendientes = ? where id = ?",
+					PreparedStatement.RETURN_GENERATED_KEYS
+					);
+			
+			stmt.setString(1, te.getNombre());
+			stmt.setInt(2, te.getCantMaxReservasPendientes());
+			stmt.setInt(3, te.getID());
+			
+			stmt.executeUpdate();
+			keyResultSet=stmt.getGeneratedKeys();
+			if(keyResultSet!=null && keyResultSet.next()){
+				te.setID(keyResultSet.getInt(1));
+			}
+		} catch (SQLException | AppDataException e) {
+			throw e;
+		}
+		try {
+			if(keyResultSet!=null)keyResultSet.close();
+			if(stmt!=null)stmt.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void delete(TipoElemento te) throws Exception{						
 		PreparedStatement stmt=null;
 		int a;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"delete from tipoelemento where nombre=?");
-			stmt.setString(1, te.getNombre());
+					"delete from tipoelemento where id=?");
+			stmt.setInt(1, te.getID());
 			a = stmt.executeUpdate();
 			
 		} catch (Exception e) {

@@ -42,8 +42,7 @@ public class CtrlABMCPersona {
 	
 	public void update(Persona p)throws Exception{	
 		DataPersona datapers = new DataPersona();
-		datapers.delete(p);
-		datapers.add(p);
+		datapers.update(p);
 				
 	}
 	
